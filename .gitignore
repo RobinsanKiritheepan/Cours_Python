@@ -1,0 +1,16 @@
+# Fichiers temporaires Python / Jupyter
+__pycache__/
+*.pyc
+*.pyo
+.ipynb_checkpoints/
+
+# Fichiers systeme
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Environnements virtuels
+venv/
+.venv/
+env/
+ENV/

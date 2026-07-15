@@ -1,0 +1,11 @@
+Visitor_ID,Visitor_Name,Alien_Species,Ticket_Type,Age,Zone_Visited,Credits_Spent,Satisfaction_Score
+V101,Zorblax,Martian,VIP,142,Hyperspace Rollercoaster,450.50,9.2
+V102,John Doe,Human,Standard,34,Laser Tag Arena,75.00,4.1
+V103,BleepBloop,Droid,Standard,8,Droid Recharge Station,20.00,8.5
+V104,Commander Shepard,Human,VIP,39,Hyperspace Rollercoaster,600.00,10.0
+V105,Xylar,Martian,Child,12,Alien Petting Zoo,35.00,NaN
+V106,Groot,Flora Colossus,Standard,4,Alien Petting Zoo,15.00,9.9
+V107,GlipGlop,Martian,Standard,22,Laser Tag Arena,110.00,2.5
+V108,Obi-Wan,Human,VIP,57,Quantum Buffet,250.00,9.5
+V109,R2-D2,Droid,Child,3,Droid Recharge Station,0.00,7.8
+V110,T'Challa,Human,VIP,35,Quantum Buffet,500.00,NaN
