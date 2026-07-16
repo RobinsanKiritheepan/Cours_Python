@@ -1,0 +1,88 @@
+========================================================================
+  POUSSER LES DONNEES SUR GITHUB
+========================================================================
+
+  A FAIRE : chaque fois que tu ajoutes ou modifies un fichier ici.
+
+  POURQUOI : le notebook ne lit PAS ce dossier. Il lit l'URL GitHub.
+  Tant que tu n'as pas pousse, il continue de lire l'ANCIENNE version,
+  sans afficher la moindre erreur.
+
+------------------------------------------------------------------------
+  LES 4 LIGNES A TAPER
+------------------------------------------------------------------------
+
+  Ouvre un terminal dans VS Code : Terminal > New Terminal
+  Puis copie-colle ligne par ligne :
+
+
+cd C:\Users\kirit\Documents\Projets\Cours_Python
+
+git add Cours_IA/Deep_learning/Google_Colab/donnees/
+
+git commit -m "maj des donnees"
+
+git push
+
+
+  C'est tout. Le notebook verra la nouvelle version tout de suite apres.
+
+------------------------------------------------------------------------
+  VERIFIER QUE C'EST PARTI (optionnel)
+------------------------------------------------------------------------
+
+  Colle cette adresse dans ton navigateur. Si tu vois ton fichier,
+  c'est bon. Si tu vois "404: Not Found", le push n'a pas eu lieu.
+
+https://raw.githubusercontent.com/RobinsanKiritheepan/Cours_Python/main/Cours_IA/Deep_learning/Google_Colab/donnees/Advertising.csv
+
+  (remplace Advertising.csv par le nom de ton fichier)
+
+------------------------------------------------------------------------
+  SI TU AJOUTES UN NOUVEAU FICHIER
+------------------------------------------------------------------------
+
+  Exemple : tu deposes mes_donnees.csv dans ce dossier.
+
+  1. Les 4 lignes ci-dessus (elles poussent TOUT le dossier donnees/)
+
+  2. Dans le notebook, cellule 2, remplace :
+
+         df = pd.read_csv(source("Advertising.csv"))
+
+     par :
+
+         df = pd.read_csv(source("mes_donnees.csv"))
+
+------------------------------------------------------------------------
+  A NE JAMAIS FAIRE
+------------------------------------------------------------------------
+
+  N'ajoute PAS donnees/ au .gitignore.
+
+  Le reflexe "les donnees, ca ne se commit pas" est vrai en general,
+  mais ici il casserait tout : les CSV seraient retires du depot, les
+  URL renverraient 404, et les notebooks ne marcheraient plus.
+
+  Ici, GitHub n'est pas une sauvegarde : c'est le TUYAU qui amene tes
+  donnees jusqu'a Colab.
+
+------------------------------------------------------------------------
+  MESSAGES D'ERREUR COURANTS
+------------------------------------------------------------------------
+
+  "nothing to commit, working tree clean"
+      -> aucun fichier n'a change. C'est deja a jour, tout va bien.
+
+  "Updates were rejected"
+      -> quelqu'un (ou toi, ailleurs) a pousse avant toi.
+         Tape : git pull      puis recommence.
+
+  "404: Not Found" sur l'URL
+      -> le push n'a pas eu lieu, ou le nom du fichier ne correspond pas.
+         Attention aux majuscules : GitHub y est sensible.
+
+========================================================================
+  Cree le 16/07/2026.
+  Voir le README.md du dossier au-dessus pour le reste.
+========================================================================
