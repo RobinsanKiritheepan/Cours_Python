@@ -14,3 +14,12 @@ venv/
 .venv/
 env/
 ENV/
+
+# Sauvegardes locales (copies de travail, pas leur place sur le depot)
+*.backup_avant_gpu
+*.backup
+
+# NOTE : les CSV de donnees/ NE SONT PAS ignores, et c'est voulu.
+# Les notebooks Colab les lisent par leur URL GitHub brute :
+# https://raw.githubusercontent.com/RobinsanKiritheepan/Cours_Python/main/<chemin>
+# Les ignorer casserait les notebooks (404). Ils doivent etre pousses.
