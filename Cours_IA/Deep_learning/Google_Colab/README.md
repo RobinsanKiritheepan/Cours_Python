@@ -1,12 +1,14 @@
-# Google Colab — test
+# Google Colab — démo
 
 Petit notebook pour **vérifier** que Colab marche, avant de lancer un vrai projet.
 `Run All` et tu sais.
 
 ```
 Google_Colab\
-├── test_colab.ipynb        ← ouvre celui-ci
-└── donnees\Advertising.csv ← ta source, poussée sur GitHub
+├── demo_colab.ipynb        ← ouvre celui-ci
+└── donnees\
+    ├── Advertising.csv     ← ta source, poussée sur GitHub
+    └── commandes_terminal_pour_push_donnees.txt
 ```
 
 ## 📦 Comment les données circulent
@@ -25,8 +27,8 @@ l'URL les relit.
 
 > **Tu modifies un CSV dans `donnees/` → tu pousses avant de relancer.**
 
-Sinon le notebook lit l'ancienne version, **sans rien dire**. C'est le prix d'une source
-unique — et c'est aussi ce qui garantit que ton PC et Colab ne divergeront jamais.
+Sinon le notebook lit l'ancienne version, **sans rien dire**. Les commandes sont dans
+`donnees/commandes_terminal_pour_push_donnees.txt`.
 
 ### ⚠️ `donnees/` ne doit PAS être dans le `.gitignore`
 
@@ -43,7 +45,7 @@ jamais touché**, aucune autorisation demandée, rien monté.
 
 | | Pourquoi |
 |---|---|
-| `files.upload()` | Fenêtre **JavaScript** qui exige l'interface **web** de Colab. Dans VS Code : widget mort, cellule bloquée. Aucun contournement (c'est dans les *Known Issues* de l'extension). |
+| `files.upload()` | Fenêtre **JavaScript** qui exige l'interface **web** de Colab. Dans VS Code : widget mort, cellule bloquée à l'infini. Aucun contournement (c'est dans les *Known Issues* de l'extension). |
 | `drive.mount()` | Monterait ton « Mon Drive » **en entier** — photos, vidéos, documents. Impossible de le limiter à un dossier. |
 | Un chemin local depuis Colab | *« the remote Colab runtime cannot access local files »*. La machine Google est **vide** : seul le **code** part, pas ton dossier. |
 
@@ -57,17 +59,18 @@ jamais touché**, aucune autorisation demandée, rien monté.
 Extension **`Google Colab`** requise (`Ctrl+Shift+X`, éditeur **Google**) — installée.
 
 **`Select Kernel`** (en haut à droite) → `Select Another Kernel...` → `Colab` → connexion
-Google → `Auto Connect`.
+Google → **`New Colab Server`** → **`GPU`** → **`T4`**
 
-Si tu récupères un CPU : refais-le avec **`New Colab Server` → `GPU` → `T4`**.
-
-> ⚠️ Le menu `Runtime → Change runtime type` n'existe **que sur le Colab web**. Dans
-> VS Code, le GPU se choisit **à la création du serveur**.
+> ⚠️ **Le GPU se choisit à la création du serveur, nulle part ailleurs.** Avec
+> `Auto Connect` tu risques un **serveur CPU** — plus lent que ton propre PC. Un serveur
+> créé en CPU le reste : il faut en refaire un.
 >
-> ℹ️ L'auth de l'extension a des bugs ouverts (`Exchange timeout exceeded`). Si ça coince,
-> réessaie — ça finit par passer.
+> Le menu `Runtime → Change runtime type` n'existe **que sur le Colab web**.
+>
+> ℹ️ L'auth de l'extension a des bugs ouverts (`Exchange timeout exceeded`). Réessaie,
+> ça finit par passer.
 
-## Ce que le test vérifie
+## Ce que la démo vérifie
 
 1. Où tu tournes (ton PC ou Colab)
 2. Quel matériel tu as vraiment décroché
@@ -77,12 +80,12 @@ Si tu récupères un CPU : refais-le avec **`New Colab Server` → `GPU` → `T4
 
 ## 📊 Résultats mesurés le 16/07/2026
 
-500 epochs, réseau de 161 paramètres :
+500 epochs, réseau de 161 paramètres, avec ce notebook :
 
 | Noyau | Temps |
 |---|---|
-| `Python 3` (CPU) | **0,27 s** |
-| `Python (GPU ROCm)` (Radeon 880M) | **1,09 s** ← **4× plus lent** |
+| `Python 3` (CPU) | **0,24 s** |
+| `Python (GPU ROCm)` (Radeon 880M) | **1,12 s** ← **4,7× plus lent** |
 
 Perte identique des deux côtés : 211,60 → 0,20.
 
@@ -90,13 +93,15 @@ Perte identique des deux côtés : 211,60 → 0,20.
 données vers la carte coûte plus cher que le calcul. Il gagne sur les CNN, les
 transformers, les batchs ≥ 32.
 
-**Ce notebook ne sert pas à aller vite** — il sert à vérifier que la plomberie marche avant
+**Cette démo ne sert pas à aller vite** — elle sert à vérifier que la plomberie marche avant
 que tu en aies besoin.
 
-## ⚠️ Piège connu
+## ⚠️ Pièges connus
 
-Le noyau `Python (GPU ROCm)` **se fige au démarrage de temps en temps** (0 % de CPU).
-Stack ROCm en preview. `Restart Kernel` et ça repart.
+- Le noyau `Python (GPU ROCm)` **se fige au démarrage de temps en temps** (0 % de CPU, rien
+  ne s'affiche). Stack ROCm en preview. `Restart Kernel` et ça repart.
+- Si tu modifies un notebook pendant qu'il est ouvert, VS Code peut garder l'ancienne
+  version en mémoire (un **`●`** apparaît sur l'onglet). Ferme **sans enregistrer**, rouvre.
 
 ---
 
