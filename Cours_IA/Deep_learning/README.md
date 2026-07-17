@@ -7,11 +7,22 @@ le réseau brique par brique et on écrit sa propre boucle d'entraînement.
 
 | Dossier | Description |
 |---|---|
-| **[01_Exercices_originaux](01_Exercices_originaux/)** | `S9_P2_Deep_Learning.ipynb` — les fondamentaux PyTorch |
-| **[03_Cours_detaille](03_Cours_detaille/)** | Le même notebook, **annoté** (théorie + explications) |
-| **[Google_Colab](Google_Colab/)** | Démo Colab — données servies par URL GitHub *(voir son README)* |
-| **[PowerPoints](PowerPoints/)** | Le support de présentation |
+| **[01_Exercices_originaux](01_Exercices_originaux/)** | Mes notebooks, tels que je les ai écrits — jamais modifiés après coup |
+| **[03_Cours_detaille](03_Cours_detaille/)** | Le S9_P2 annoté (théorie + explications) |
+| **[Complet](Complet/)** | Les notebooks **annotés** — même code, cours intercalé *(voir son README)* |
+| **[Data](Data/)** | Les datasets réels (Air Quality UCI) |
+| **[Google_Colab](Google_Colab/)** | Versions Colab — GPU T4 gratuit *(voir son README)* |
+| **[PowerPoints](PowerPoints/)** | Les supports de présentation |
 | **Archives** | Sauvegarde d'avant l'adaptation GPU |
+
+## 📓 La progression
+
+| Notebook | Thème | Annoté |
+|---|---|---|
+| **S9_P2** | Premiers pas : tenseurs, autograd, `nn.Module` | [Complet](Complet/S9_P2_Deep_Learning_cours_complet.ipynb) · [03_Cours_detaille](03_Cours_detaille/) |
+| **S9_P3** | L'escalier complet : de l'autograd à Lightning, **la boucle à la main** | [Complet](Complet/S9_P3_Deep_Learning_cours_complet.ipynb) |
+| **S9_P4** | **Le pipeline complet** : split → scaler → MLP → `Trainer` → courbes → évaluation | [Complet](Complet/S9_P4_DL_cours_complet.ipynb) |
+| **S9_P5** | Les **vraies données** (Air Quality UCI) — le nettoyage est le vrai travail | [Complet](Complet/S9_P5_DL_cours_complet.ipynb) |
 
 ## 📚 Les notions couvertes
 

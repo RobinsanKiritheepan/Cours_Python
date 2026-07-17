@@ -19,6 +19,11 @@ ENV/
 *.backup_avant_gpu
 *.backup
 
+# Sorties d'entrainement PyTorch Lightning (CSVLogger, checkpoints).
+# Regenerees a chaque trainer.fit() : un nouveau version_N a chaque run.
+# C'est du resultat de calcul, pas du code -> ca n'a pas sa place sur le depot.
+lightning_logs/
+
 # NOTE : les CSV de donnees/ NE SONT PAS ignores, et c'est voulu.
 # Les notebooks Colab les lisent par leur URL GitHub brute :
 # https://raw.githubusercontent.com/RobinsanKiritheepan/Cours_Python/main/<chemin>
