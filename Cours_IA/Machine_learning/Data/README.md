@@ -17,7 +17,7 @@ Toutes les données utilisées par les notebooks des dossiers `01_` à `06_`.
 | `housing_kaggle_original.csv` | — | California Housing (dataset Kaggle d'origine) |
 | `area_vs_price.png` | S1 | Graphique exporté depuis un notebook |
 
-## ▶️ Comment les notebooks y accèdent
+## Comment les notebooks y accèdent
 
 ```python
 df = pd.read_csv("../Data/Housing_2.csv")          # depuis 01_, 02_, 03_, 04_, 05_

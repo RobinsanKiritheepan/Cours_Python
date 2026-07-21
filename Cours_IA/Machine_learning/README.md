@@ -41,7 +41,7 @@ Le cœur du cours : construire, évaluer et comprendre des modèles de Machine L
 | `max_depth=30` en boosting → 27 min de calcul | S7 |
 | `silhouette_score` en O(n²) → `sample_size=2000` | S9 |
 
-## ▶️ Exécuter les notebooks
+## Exécuter les notebooks
 
 Les données sont dans [`Data/`](Data/) et lues via un chemin relatif :
 ```python

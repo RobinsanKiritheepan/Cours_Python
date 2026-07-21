@@ -171,7 +171,7 @@ d'annotation et de réorganisation — pas à l'écriture des exercices.
 
 `Python` · `pandas` · `NumPy` · `scikit-learn` · `matplotlib` · `seaborn` · `plotly` · `SHAP` · `PyTorch`
 
-## ▶️ Utilisation
+## Utilisation
 
 Les notebooks lisent leurs données depuis le dossier `Data/` de leur section
 (`pd.read_csv("../Data/fichier.csv")`) — ils s'exécutent directement après un clone.
