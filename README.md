@@ -59,15 +59,46 @@ Cours_Python/
 
 Le **numéro indique le statut**, pas l'ordre du cours :
 
-| Dossier | Signification |
-|---|---|
-| `01_Exercices_originaux/` | Le notebook **tel que je l'ai écrit** en cours — jamais modifié après coup |
-| `02_Corrections/` | Les corrections **fournies avec le cours** |
-| `03_Cours_detaille/` | Le **même notebook, annoté** : théorie, formules, lecture des résultats, pièges |
-| `04_Notebooks_solutions_perso/` | Mes propres versions corrigées / améliorées |
+| Dossier | Signification | Qui l'a écrit |
+|---|---|---|
+| `01_Exercices_originaux/` | Le notebook **tel que je l'ai écrit** en cours — jamais modifié après coup | ✍️ **moi** |
+| `02_Corrections/` | Les corrections **fournies avec le cours** | 🎓 l'enseignant |
+| `03_Cours_detaille/` · `Complet/` | Le **même code**, avec des explications intercalées : théorie, formules, lecture des résultats, pièges | 🤖 **annotations générées avec Claude** |
+| `04_Notebooks_solutions_perso/` | Versions corrigées / améliorées de mes exercices | ✍️🤖 moi, avec de l'aide |
 
 👉 **Pour apprendre une notion** : ouvre `03_Cours_detaille/`.
 👉 **Pour voir le code brut** : ouvre `01_Exercices_originaux/`.
+
+---
+
+## ✍️ Qui a écrit quoi
+
+Ce dépôt mélange volontairement deux choses, et il vaut mieux le dire clairement :
+
+- **Le code des exercices est le mien.** Tout ce qui est dans `01_Exercices_originaux/`
+  a été tapé par moi pendant les séances, avec mes erreurs et mes tâtonnements. Ces
+  fichiers ne sont **jamais** retouchés après coup — c'est la trace de mon apprentissage.
+
+- **Les explications sont générées par IA.** Les dossiers `03_Cours_detaille/` et
+  `Complet/` reprennent mon code et y ajoutent des cellules markdown rédigées avec
+  **Claude** : théorie, formules, lecture des sorties, pièges rencontrés. C'est mon
+  support de révision.
+
+  **Sur 32 notebooks annotés, 28 conservent mon code à l'identique.** Les 4 autres
+  contiennent en plus une correction, et c'est assumé :
+
+  | Fichier | Ce qui a été modifié |
+  |---|---|
+  | `S9_P1_Unsupervised_learning` | `silhouette_score` avec `sample_size=2000` (sinon 11 s par itération), cellules réordonnées |
+  | `S8_P2_KMeans_DBSCAN_Moons` | `noise=0.1` et DBSCAN réécrit — la version d'origine ne séparait pas les deux lunes |
+  | `S9_P2_Deep_Learning` *(×2 : `03_` et `Complet/`)* | boucle d'entraînement allégée, `print` de débogage retiré, adaptation GPU |
+
+  Dans tous les cas, **la version d'origine reste intacte** dans
+  `01_Exercices_originaux/` — il suffit de comparer les deux fichiers pour voir la
+  différence.
+
+Les commits portant la mention `Co-Authored-By: Claude` correspondent à ce travail
+d'annotation et de réorganisation — pas à l'écriture des exercices.
 
 ---
 
