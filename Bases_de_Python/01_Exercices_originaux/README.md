@@ -15,4 +15,4 @@ Les notebooks **tels que je les ai écrits en cours**, non retouchés.
 | `script.py` | script d'essai |
 | `galaxy_park_data.csv`, `mon.txt` | données utilisées par les notebooks |
 
-👉 Pour la **version expliquée**, voir [`02_Cours_detaille`](../02_Cours_detaille/).
+Pour la **version expliquée**, voir [`02_Cours_detaille`](../02_Cours_detaille/).

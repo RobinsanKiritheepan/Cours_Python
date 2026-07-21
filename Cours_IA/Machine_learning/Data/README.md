@@ -1,4 +1,4 @@
-# 📊 Data — les datasets
+# Data — les datasets
 
 Toutes les données utilisées par les notebooks des dossiers `01_` à `06_`.
 

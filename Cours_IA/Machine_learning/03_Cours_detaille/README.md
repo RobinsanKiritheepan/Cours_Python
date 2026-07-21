@@ -1,17 +1,17 @@
-# 03 — Cours détaillé 📖
+# 03 — Cours détaillé
 
 **C'est ici qu'il faut venir pour apprendre.** Les mêmes notebooks que
 [`01_Exercices_originaux`](../01_Exercices_originaux/), enrichis d'explications en français.
 
 ## Ce que chaque notebook contient en plus
 
-- 🎯 **Les objectifs** et un **tableau de vocabulaire** en introduction
+- **Les objectifs** et un **tableau de vocabulaire** en introduction
 - **Ligne par ligne** : ce que fait le code, et surtout *pourquoi*
-- 🧠 **THÉORIE** : les formules décortiquées symbole par symbole
+- **THÉORIE** : les formules décortiquées symbole par symbole
   *(moindres carrés, sigmoïde, Gini, précision/rappel, silhouette…)*
-- 🔍 **La lecture des résultats** : quoi regarder sur chaque graphique, ce qui doit alerter
+- **La lecture des résultats** : quoi regarder sur chaque graphique, ce qui doit alerter
 - 🔴 **Les pièges** : chaque bug rencontré, expliqué et démontré avec les chiffres
-- 📝 Un **résumé** en fin de notebook
+- Un **résumé** en fin de notebook
 
 ## Sous-dossier
 

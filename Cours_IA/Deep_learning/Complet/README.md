@@ -1,4 +1,4 @@
-# 📖 Complet — les notebooks annotés
+# Complet — les notebooks annotés
 
 Chaque notebook de `01_Exercices_originaux/` repris **à l'identique**, avec des cellules
 markdown intercalées : la théorie, les formules, la lecture des résultats et les pièges.
@@ -7,7 +7,7 @@ markdown intercalées : la théorie, les formules, la lecture des résultats et 
 > entre les cellules. Si un bug est présent dans l'original, il est **expliqué** ici — pas
 > corrigé. C'est voulu : on apprend mieux en voyant l'erreur et sa conséquence.
 
-## 📂 Contenu
+## Contenu
 
 | Fichier | Original | Ce que tu y apprends |
 |---|---|---|
@@ -16,7 +16,7 @@ markdown intercalées : la théorie, les formules, la lecture des résultats et 
 | `S9_P4_DL_cours_complet.ipynb` | S9_P4 | **Le pipeline complet** : données → split → scaler → `Dataset` → MLP → `Trainer` → courbes → évaluation |
 | `S9_P5_DL_cours_complet.ipynb` | S9_P5 | Les **vraies données** (Air Quality UCI) : le nettoyage est le vrai travail |
 
-## 🎯 Par où commencer
+## Par où commencer
 
 | Ce que tu cherches | Va voir |
 |---|---|
@@ -24,7 +24,7 @@ markdown intercalées : la théorie, les formules, la lecture des résultats et 
 | Monter un **projet complet** | `S9_P4` — le squelette de tout projet DL |
 | Gérer des **données sales** | `S9_P5` — le piège des `-200` |
 
-## 🔴 Les pièges expliqués dans ces notebooks
+## Les pièges expliqués dans ces notebooks
 
 | Piège | Où | Pourquoi c'est vicieux |
 |---|---|---|
@@ -38,5 +38,5 @@ markdown intercalées : la théorie, les formules, la lecture des résultats et 
 **Leur point commun : aucun ne fait planter le code.** En deep learning, l'absence d'erreur
 ne prouve rien.
 
-👉 Le code brut, sans annotation : [`01_Exercices_originaux`](../01_Exercices_originaux/)
-👉 Les supports de présentation : [`PowerPoints`](../PowerPoints/)
+Le code brut, sans annotation : [`01_Exercices_originaux`](../01_Exercices_originaux/)
+Les supports de présentation : [`PowerPoints`](../PowerPoints/)

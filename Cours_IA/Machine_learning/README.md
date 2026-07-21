@@ -1,8 +1,8 @@
-# 🤖 Machine Learning — S1 à S9
+# Machine Learning — S1 à S9
 
 Le cœur du cours : construire, évaluer et comprendre des modèles de Machine Learning.
 
-## 📂 Contenu
+## Contenu
 
 | Dossier | Description |
 |---|---|
@@ -15,7 +15,7 @@ Le cœur du cours : construire, évaluer et comprendre des modèles de Machine L
 | **[Data](Data/)** | Tous les datasets |
 | **[PowerPoints](PowerPoints/)** | Un deck par séance |
 
-## 📚 Les séances
+## Les séances
 
 | Séance | Thème | Dataset | Notions clés |
 |---|---|---|---|
@@ -29,7 +29,7 @@ Le cœur du cours : construire, évaluer et comprendre des modèles de Machine L
 | **S8** | Clustering | Iris, moons | **KMeans**, **DBSCAN**, PCA, t-SNE, coude & silhouette |
 | **S9** | Non supervisé réel | Credit Risk | clustering sur 28 638 vraies demandes de crédit |
 
-## 🔴 Les pièges rencontrés (et documentés)
+## Les pièges rencontrés (et documentés)
 
 | Piège | Séance |
 |---|---|

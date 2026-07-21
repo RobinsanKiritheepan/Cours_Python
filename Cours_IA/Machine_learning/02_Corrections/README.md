@@ -11,4 +11,4 @@ Les notebooks de **correction fournis avec le cours**, à comparer avec mes vers
 | `S8_P2_Clustering_DBSCAN.ipynb` | DBSCAN sur Iris |
 | `S8_P3_Comparaison_KMeans_DBSCAN.ipynb` | Le match KMeans vs DBSCAN sur les « moons » |
 
-👉 Leur **version annotée** : [`03_Cours_detaille/Corrections_expliquees`](../03_Cours_detaille/Corrections_expliquees/).
+Leur **version annotée** : [`03_Cours_detaille/Corrections_expliquees`](../03_Cours_detaille/Corrections_expliquees/).

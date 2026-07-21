@@ -1,4 +1,4 @@
-# 🎬 PowerPoints — Machine Learning
+# PowerPoints — Machine Learning
 
 **Un deck par séance** — idéal pour réviser avant un TP ou un examen.
 
@@ -20,4 +20,4 @@
 2. Les **diapos de cours** (concept → pourquoi → lecture des résultats)
 3. Une diapo **« À retenir »** : les 4 idées clés + 🔴 **les pièges de la séance**
 
-👉 Le deck **général** (tout le cours) : [`Cours_IA/PowerPoints`](../../PowerPoints/).
+Le deck **général** (tout le cours) : [`Cours_IA/PowerPoints`](../../PowerPoints/).

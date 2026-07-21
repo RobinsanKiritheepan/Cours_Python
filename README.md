@@ -1,4 +1,4 @@
-# 🐍 Cours Python & Intelligence Artificielle
+# Cours Python & Intelligence Artificielle
 
 Parcours complet **des bases de Python jusqu'au Deep Learning** : notebooks d'exercices,
 cours détaillés en français et supports de présentation.
@@ -8,7 +8,7 @@ cours détaillés en français et supports de présentation.
 
 ---
 
-## 🎓 Le contexte
+## Le contexte
 
 Ce dépôt rassemble mon travail du **Barcelona Summer Course** (Northin), à Barcelone —
 un programme d'été intensif *Computer science & IoT*, suivi du **15 juin au 7 août 2026**
@@ -38,28 +38,28 @@ ou de l'autre — y compris les 4 notebooks où le code a réellement été corr
 
 ---
 
-## 📑 Sommaire
+## Sommaire
 
 | Section | Contenu |
 |---|---|
-| 🐍 **[Bases_de_Python](Bases_de_Python/)** | Les fondamentaux : types, listes, fonctions, POO, pandas *(day1 → day5)* |
-| 🤖 **[Cours_IA](Cours_IA/)** | Machine Learning *(S1 → S9)* + Deep Learning *(PyTorch)* |
-| 📦 **[Archives](Archives/)** | Anciennes versions et doublons — conservés, non maintenus |
-| 🎓 **[Summer Course 2026](Summer%20Course%202026/)** | Support de cours d'été (Python, ML, Java) |
+| **[Bases_de_Python](Bases_de_Python/)** | Les fondamentaux : types, listes, fonctions, POO, pandas *(day1 → day5)* |
+| **[Cours_IA](Cours_IA/)** | Machine Learning *(S1 → S9)* + Deep Learning *(PyTorch)* |
+| **[Archives](Archives/)** | Anciennes versions et doublons — conservés, non maintenus |
+| **[Summer Course 2026](Summer%20Course%202026/)** | Support de cours d'été (Python, ML, Java) |
 
 ---
 
-## 🗂️ Architecture
+## Architecture
 
 ```
 Cours_Python/
 │
-├── Bases_de_Python/              🐍 Les fondamentaux Python
+├── Bases_de_Python/               Les fondamentaux Python
 │   ├── 01_Exercices_originaux/      day1 → day5 (mes exercices)
 │   ├── 02_Cours_detaille/           les mêmes, annotés en français
 │   └── PowerPoints/                 le support de présentation
 │
-├── Cours_IA/                     🤖 Intelligence Artificielle
+├── Cours_IA/                      Intelligence Artificielle
 │   ├── PowerPoints/                 le deck général (Python + ML + DL)
 │   │
 │   ├── Machine_learning/            S1 → S9 : régression, classification, clustering
@@ -79,24 +79,24 @@ Cours_Python/
 │       ├── Archives/
 │       └── PowerPoints/
 │
-├── Archives/                     📦 anciennes versions, doublons
-└── Summer Course 2026/           🎓 cours d'été
+├── Archives/                      anciennes versions, doublons
+└── Summer Course 2026/            cours d'été
 ```
 
 ---
 
-## 🔢 La convention des dossiers numérotés
+## La convention des dossiers numérotés
 
 Le **numéro indique le statut**, pas l'ordre du cours :
 
 | Dossier | Signification | Qui l'a écrit |
 |---|---|---|
-| `01_Exercices_originaux/` | Le notebook **tel que je l'ai écrit** en cours — jamais modifié après coup | ✍️ **moi** |
-| `02_Corrections/` | Les corrections **fournies avec le cours** | 🎓 l'enseignant |
-| `03_Cours_detaille/` · `Complet/` | Le **même code**, avec des explications intercalées : théorie, formules, lecture des résultats, pièges | 🤖 **annotations générées avec Claude** |
-| `04_Notebooks_solutions_perso/` | Versions corrigées / améliorées de mes exercices | ✍️🤖 moi, avec de l'aide |
+| `01_Exercices_originaux/` | Le notebook **tel que je l'ai écrit** en cours — jamais modifié après coup | **moi** |
+| `02_Corrections/` | Les corrections **fournies avec le cours** | l'enseignant |
+| `03_Cours_detaille/` · `Complet/` | Le **même code**, avec des explications intercalées : théorie, formules, lecture des résultats, pièges | **annotations générées avec Claude** |
+| `04_Notebooks_solutions_perso/` | Versions corrigées / améliorées de mes exercices | moi, avec de l'aide |
 
-## 👉 Par où commencer — lisez ceci
+## Par où commencer — lisez ceci
 
 > ### Prenez la version `03_Cours_detaille/`
 >
@@ -117,7 +117,7 @@ Le **numéro indique le statut**, pas l'ordre du cours :
 
 ---
 
-## ✍️ Qui a écrit quoi
+## Qui a écrit quoi
 
 Ce dépôt mélange volontairement deux choses, et il vaut mieux le dire clairement :
 
@@ -150,7 +150,7 @@ d'annotation et de réorganisation — pas à l'écriture des exercices.
 
 ---
 
-## 📚 La progression du cours
+## La progression du cours
 
 | Séance | Thème | Notions clés |
 |---|---|---|
@@ -167,7 +167,7 @@ d'annotation et de réorganisation — pas à l'écriture des exercices.
 
 ---
 
-## 🛠️ Technologies
+## Technologies
 
 `Python` · `pandas` · `NumPy` · `scikit-learn` · `matplotlib` · `seaborn` · `plotly` · `SHAP` · `PyTorch`
 

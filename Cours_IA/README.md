@@ -1,9 +1,9 @@
-# 🤖 Cours IA
+# Cours IA
 
 Le parcours Intelligence Artificielle : du premier modèle de régression jusqu'aux réseaux
 de neurones.
 
-## 📂 Contenu
+## Contenu
 
 | Dossier | Description |
 |---|---|
@@ -11,7 +11,7 @@ de neurones.
 | **[Deep_learning](Deep_learning/)** | **PyTorch**, GPU (ROCm), Google Colab |
 | **[PowerPoints](PowerPoints/)** | Le deck **général** qui couvre tout le cours |
 
-## 🗺️ La progression
+## La progression
 
 ```
 S1  Régression linéaire  ──►  S2  Régression multiple + classification
@@ -22,10 +22,10 @@ S3  KNN & Naive Bayes  ◄────────────┘
                                                        │
 S7  ROC/AUC & SHAP  ◄──────────────────────────────────┘
      │
-     └──►  S8  Clustering  ──►  S9  Non supervisé réel  ──►  🧠 Deep Learning
+     └──►  S8  Clustering  ──►  S9  Non supervisé réel  ──►   Deep Learning
 ```
 
-## 🎯 Le fil rouge du cours
+## Le fil rouge du cours
 
 Toutes les séances tournent autour d'une même idée : **mémoire ≠ intelligence**.
 Un modèle doit être évalué sur des données **jamais vues** (train/test), et l'`accuracy`

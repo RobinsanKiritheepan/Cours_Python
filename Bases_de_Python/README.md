@@ -1,8 +1,8 @@
-# 🐍 Bases de Python
+# Bases de Python
 
 Le socle avant l'IA : de la variable `a = 3` jusqu'à **pandas**.
 
-## 📂 Contenu
+## Contenu
 
 | Dossier | Description |
 |---|---|
@@ -10,7 +10,7 @@ Le socle avant l'IA : de la variable `a = 3` jusqu'à **pandas**.
 | **[02_Cours_detaille](02_Cours_detaille/)** | Les mêmes, **annotés en français** : chaque notion expliquée, chaque piège signalé |
 | **[PowerPoints](PowerPoints/)** | Le support de présentation qui résume les 5 jours |
 
-## 📚 Le programme
+## Le programme
 
 | Notebook | Notions |
 |---|---|
@@ -21,7 +21,7 @@ Le socle avant l'IA : de la variable `a = 3` jusqu'à **pandas**.
 | `day4` | `enumerate`/`zip`, **décorateurs**, walrus `:=`, **matplotlib** |
 | `day5` | **pandas** : DataFrame, `iloc`/`loc`, filtres, `groupby`, valeurs manquantes |
 
-## 🎯 Les pièges classiques couverts
+## Les pièges classiques couverts
 
 - `b = a` sur une liste **ne copie pas** → il faut `.copy()`
 - `elif` ≠ deux `if` séparés

@@ -1,4 +1,4 @@
-# 🎬 PowerPoints — Deep Learning
+# PowerPoints — Deep Learning
 
 | Fichier | Notebook | Contenu |
 |---|---|---|
@@ -9,4 +9,4 @@
 > Le S9_P5 (vraies données Air Quality) n'a pas encore son deck dédié : le notebook est en
 > cours d'écriture. Son contenu est couvert dans le deck général.
 
-👉 Le deck **général** (tout le cours, 51 diapos) : [`Cours_IA/PowerPoints`](../../PowerPoints/).
+Le deck **général** (tout le cours, 51 diapos) : [`Cours_IA/PowerPoints`](../../PowerPoints/).

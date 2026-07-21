@@ -1,9 +1,9 @@
-# 🧠 Deep Learning
+# Deep Learning
 
 Le grand saut : fini les modèles tout faits de scikit-learn — avec **PyTorch**, on construit
 le réseau brique par brique et on écrit sa propre boucle d'entraînement.
 
-## 📂 Contenu
+## Contenu
 
 | Dossier | Description |
 |---|---|
@@ -15,7 +15,7 @@ le réseau brique par brique et on écrit sa propre boucle d'entraînement.
 | **[PowerPoints](PowerPoints/)** | Les supports de présentation |
 | **Archives** | Sauvegarde d'avant l'adaptation GPU |
 
-## 📓 La progression
+## La progression
 
 | Notebook | Thème | Annoté |
 |---|---|---|
@@ -24,7 +24,7 @@ le réseau brique par brique et on écrit sa propre boucle d'entraînement.
 | **S9_P4** | **Le pipeline complet** : split → scaler → MLP → `Trainer` → courbes → évaluation | [Complet](Complet/S9_P4_DL_cours_complet.ipynb) |
 | **S9_P5** | Les **vraies données** (Air Quality UCI) — le nettoyage est le vrai travail | [Complet](Complet/S9_P5_DL_cours_complet.ipynb) |
 
-## 📚 Les notions couvertes
+## Les notions couvertes
 
 | Concept | Description |
 |---|---|
@@ -34,12 +34,12 @@ le réseau brique par brique et on écrit sa propre boucle d'entraînement.
 | **`nn.Module`** | `__init__` déclare les couches, `forward` décrit le chemin |
 | **La boucle** | forward → loss → `zero_grad` → backward → step |
 
-## ⚙️ Le GPU
+## Le GPU
 
 Ce notebook tourne sur un **AMD Radeon 880M** via **ROCm** (`torch 2.9.1+rocm7.2.1`).
 L'API garde le nom `cuda` — ROCm imite l'API NVIDIA, donc le code reste identique à un tuto CUDA.
 
-### 🔴 La leçon la plus importante : le GPU est parfois PLUS LENT
+### La leçon la plus importante : le GPU est parfois PLUS LENT
 
 Mesuré sur un réseau de **13 paramètres**, 200 epochs :
 

@@ -1,4 +1,4 @@
-# 🎬 PowerPoints — Deck général
+# PowerPoints — Deck général
 
 | Fichier | Contenu |
 |---|---|

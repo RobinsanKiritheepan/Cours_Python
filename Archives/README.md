@@ -1,9 +1,9 @@
-# 📦 Archives
+# Archives
 
 Fichiers **conservés pour l'historique** : anciennes versions, doublons, essais.
 Ils ne sont **pas maintenus** et n'ont pas vocation à être exécutés.
 
-> 🔒 Rien n'est jamais supprimé de ce dépôt — tout ce qui n'a plus sa place dans
+> Rien n'est jamais supprimé de ce dépôt — tout ce qui n'a plus sa place dans
 > l'arborescence active atterrit ici.
 
 | Fichier | Pourquoi il est ici |
