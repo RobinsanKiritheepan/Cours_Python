@@ -8,6 +8,36 @@ cours détaillés en français et supports de présentation.
 
 ---
 
+## 🎓 Le contexte
+
+Ce dépôt rassemble mon travail du **Barcelona Summer Course** (Northin), à Barcelone —
+un programme d'été intensif *Computer science & IoT*, suivi du **15 juin au 7 août 2026**
+(8 semaines) dans le cadre de ma formation d'ingénieur à l'**ENSEA**.
+
+| Cours du programme | Durée | Où c'est dans ce dépôt |
+|---|---|---|
+| Introduction to Python & Python for AI | 1 sem. | [`Bases_de_Python/`](Bases_de_Python/) *(day1 → day5)* |
+| Introduction to Machine Learning and Data Analysis | 1 sem. | [`Machine_learning/`](Cours_IA/Machine_learning/) *(S1 → S9, scikit-learn)* |
+| AI and Deep Learning | 1 sem. | [`Deep_learning/`](Cours_IA/Deep_learning/) *(PyTorch, Lightning, CNN)* |
+| Advanced Programming with Java | 2 sem. | [`Summer Course 2026/`](Summer%20Course%202026/) |
+
+**Le rythme est intensif** : une notion par jour, du code écrit en direct pendant la
+séance. C'est ce qui explique la forme de ce dépôt — mes fichiers de séance sont bruts
+et parfois bancals, et j'ai pris le temps de les annoter **après coup** pour réviser.
+
+### Pourquoi des annotations générées par IA
+
+Pendant les séances, je code vite et je note peu. Plutôt que de relire du code nu des
+mois plus tard, j'ai repris chaque notebook avec **Claude** pour y intercaler ce qui
+manquait : la théorie derrière chaque cellule, les formules, comment lire les sorties,
+et surtout **pourquoi mes erreurs étaient des erreurs**.
+
+C'est un choix assumé : le code reste le mien, les explications viennent de l'IA. La
+section **« Qui a écrit quoi »**, plus bas, détaille précisément ce qui relève de l'un
+ou de l'autre — y compris les 4 notebooks où le code a réellement été corrigé.
+
+---
+
 ## 📑 Sommaire
 
 | Section | Contenu |
