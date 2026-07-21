@@ -8,6 +8,9 @@ __pycache__/
 .DS_Store
 Thumbs.db
 desktop.ini
+__MACOSX/
+# verrous temporaires Office (crees quand un .pptx/.docx est ouvert)
+~$*
 
 # Environnements virtuels
 venv/
@@ -23,6 +26,13 @@ ENV/
 # Regenerees a chaque trainer.fit() : un nouveau version_N a chaque run.
 # C'est du resultat de calcul, pas du code -> ca n'a pas sa place sur le depot.
 lightning_logs/
+
+# Le mini-projet de segmentation a son PROPRE depot git.
+# Il embarque un dataset de plusieurs Go (PennFudanPed / Supervisely) : il n'a
+# rien a faire ici. Un "git add -A" a la racine l'aspirait entierement (13 355
+# fichiers, 12 Go) -- d'ou cette regle.
+mini-projet/
+mini-projet.zip
 
 # NOTE : les CSV de donnees/ NE SONT PAS ignores, et c'est voulu.
 # Les notebooks Colab les lisent par leur URL GitHub brute :
