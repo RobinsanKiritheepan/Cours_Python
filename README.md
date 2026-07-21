@@ -66,8 +66,24 @@ Le **numéro indique le statut**, pas l'ordre du cours :
 | `03_Cours_detaille/` · `Complet/` | Le **même code**, avec des explications intercalées : théorie, formules, lecture des résultats, pièges | 🤖 **annotations générées avec Claude** |
 | `04_Notebooks_solutions_perso/` | Versions corrigées / améliorées de mes exercices | ✍️🤖 moi, avec de l'aide |
 
-👉 **Pour apprendre une notion** : ouvre `03_Cours_detaille/`.
-👉 **Pour voir le code brut** : ouvre `01_Exercices_originaux/`.
+## 👉 Par où commencer — lisez ceci
+
+> ### Prenez la version `03_Cours_detaille/`
+>
+> C'est celle qui est **annotée** : chaque cellule y est expliquée (théorie, formules,
+> lecture des résultats) et **les erreurs de mon code y sont identifiées et commentées**.
+>
+> ### ⚠️ Les `01_Exercices_originaux/` peuvent planter
+>
+> Ce sont **mes fichiers bruts, tapés en séance**. Je les laisse volontairement tels
+> quels : ils contiennent mes fautes de frappe, mes contresens et parfois du code qui
+> **ne s'exécute pas** (variable mal nommée, argument inversé, boucle trop lente…).
+> Ne les prenez pas comme référence — prenez-les comme la trace de mon apprentissage.
+>
+> **Où trouver du code corrigé ?** Quelques notebooks seulement l'ont :
+> `04_Notebooks_solutions_perso/` (2 fichiers) et les 4 exceptions listées plus bas.
+> Partout ailleurs, l'erreur est **expliquée** dans la version annotée, mais le code
+> reste tel que je l'ai écrit.
 
 ---
 
@@ -84,8 +100,10 @@ Ce dépôt mélange volontairement deux choses, et il vaut mieux le dire clairem
   **Claude** : théorie, formules, lecture des sorties, pièges rencontrés. C'est mon
   support de révision.
 
-  **Sur 32 notebooks annotés, 28 conservent mon code à l'identique.** Les 4 autres
-  contiennent en plus une correction, et c'est assumé :
+  ⚠️ **Important : annoté ne veut pas dire corrigé.** Sur 32 notebooks annotés,
+  **28 gardent mon code à l'identique** — bugs compris. L'erreur y est **expliquée**
+  dans le markdown, pas réparée dans le code. Les 4 restants contiennent en plus la
+  correction appliquée :
 
   | Fichier | Ce qui a été modifié |
   |---|---|
