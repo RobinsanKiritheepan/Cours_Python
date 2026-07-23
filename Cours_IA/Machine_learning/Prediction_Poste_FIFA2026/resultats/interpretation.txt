@@ -1,0 +1,201 @@
+===========================================================================
+RESULTATS — Prediction du POSTE d'un joueur (FIFA World Cup 2026)
+Cible : position — 4 classes (Defender / Forward / Goalkeeper / Midfielder)
+54 600 lignes · 75 colonnes · 1 248 joueurs · 0 valeur manquante
+Continuite : meme dataset et meme cible que le notebook S5_P1_Fifa_Multiclasse
+===========================================================================
+
+---------------------------------------------------------------------------
+PARTIE 0 — EXPLORATION
+---------------------------------------------------------------------------
+
+1. repartition_postes.png
+   Ce que montre la figure : la repartition des 4 postes — Defender 18 900,
+   Midfielder 16 800, Forward 12 600, Goalkeeper 6 300.
+   Interpretation : le rapport est de 3:1 entre defenseurs et gardiens. Pas un
+   desequilibre extreme, mais suffisant pour ecarter l'accuracy seule. On utilise
+   le F1 MACRO, qui calcule le F1 de chaque classe puis en fait la moyenne non
+   ponderee : les 4 postes comptent a egalite, et le modele ne peut pas "gagner"
+   en negligeant les gardiens.
+
+2. fuite_jersey_number.png
+   Ce que montre la figure : la distribution des numeros de maillot par poste.
+   Interpretation : les plages ne se chevauchent JAMAIS — Gardien 1-3,
+   Defenseur 4-12, Milieu 13-20, Attaquant 21-26. Une seule regle
+   (if jersey_number <= 3 then Goalkeeper...) donnerait 100 % d'accuracy sans
+   rien apprendre du jeu. C'est une FUITE DE DONNEES au sens strict : le numero
+   est attribue PARCE QUE le joueur occupe ce poste, ce n'est pas une
+   caracteristique de son jeu. Variable exclue du modele.
+   Note : les stats propres aux gardiens (saves, punches, clean_sheet), nulles
+   pour tous les joueurs de champ, sont CONSERVEES : ce sont de vraies actions de
+   match. Deduire "ce joueur a fait des arrets, donc c'est un gardien" est un
+   raisonnement valide, pas de la triche.
+
+---------------------------------------------------------------------------
+PARTIE 1 — APPRENTISSAGE SUPERVISE
+---------------------------------------------------------------------------
+
+Separation train/test PAR JOUEUR : chaque joueur apparait ~44 fois et son poste
+ne change jamais. Un split ligne par ligne laisserait le modele memoriser les
+joueurs au lieu d'apprendre ce qui definit un poste.
+-> 43 726 lignes d'entrainement, 10 874 de test, 0 joueur en commun (verifie).
+
+Meilleurs hyperparametres (GridSearchCV, scoring = f1_macro, cv = 3) :
+  - Arbre de decision : max_depth = None, min_samples_leaf = 5        (F1 CV 0,926)
+  - Random Forest     : n_estimators = 200, max_depth = None,
+                        min_samples_leaf = 1                          (F1 CV 0,967)
+  - Gradient Boosting : n_estimators = 100, learning_rate = 0,1,
+                        max_depth = 5                                 (F1 CV 0,976)
+
+3. comparaison_metriques.png
+   Ce que montre la figure : accuracy, precision, rappel, F1 macro et ROC-AUC des
+   trois modeles sur le meme jeu de test.
+   Interpretation : Random Forest et Gradient Boosting sont a egalite (0,958 de
+   F1 macro), loin devant l'arbre seul (0,915). L'AUC de 0,997 traduit une
+   separation quasi parfaite des 4 classes.
+   Comparaison avec S5 : le KNN atteignait 89 % d'accuracy avec un split
+   aleatoire. On obtient ici 95,8 % avec un split PLUS strict et une fuite en
+   moins. Le gain vient donc bien des modeles d'ensemble.
+
+4. matrices_confusion.png
+   Ce que montre la figure : les matrices de confusion des trois modeles.
+   Interpretation : en multiclasse, chaque erreur est A LA FOIS un faux negatif
+   pour la vraie classe et un faux positif pour la classe predite.
+   Les cinq confusions les plus frequentes (Random Forest) :
+     - Attaquant  -> Milieu      128  la frontiere la plus floue
+     - Milieu     -> Attaquant   111  milieux offensifs ~ attaquants
+     - Gardien    -> Defenseur    72  gardiens a 0 arret sur le match
+     - Milieu     -> Defenseur    67  milieux defensifs
+     - Defenseur  -> Milieu       50  defenseurs portes vers l'avant
+   L'erreur dominante (attaquant <-> milieu, 239 cas) a un SENS REEL : un milieu
+   offensif et un attaquant produisent des statistiques tres semblables (tirs,
+   passes cles, dribbles). Ce n'est pas un defaut du modele, mais le reflet d'une
+   frontiere tactique reellement continue.
+
+5. f1_par_poste.png
+   Ce que montre la figure : le F1 de chaque poste pour la Random Forest.
+   Interpretation : les 4 classes sont traitees de facon homogene (0,948 a 0,968),
+   y compris les gardiens malgre leur effectif reduit.
+   Le cas des gardiens est le plus instructif :
+     - precision 0,979 : quand le modele annonce "gardien", il a presque toujours
+       raison ;
+     - rappel 0,941 : il en rate quand meme 72.
+   L'explication est dans les donnees : seuls 2 005 gardiens sur 6 300 ont au
+   moins un arret sur le match. Un gardien a 0 arret et 0 sortie ressemble
+   statistiquement a un defenseur passif.
+   Quelle erreur est la plus grave ? Cela depend de l'usage : pour un RECRUTEUR
+   qui cherche des gardiens, le rappel prime (ne pas en rater) ; pour un
+   ETIQUETAGE AUTOMATIQUE de base de donnees, la precision prime (ne pas
+   polluer). Le modele actuel favorise la precision.
+
+6. courbes_roc.png
+   Ce que montre la figure : les courbes ROC one-vs-rest (chaque poste oppose a
+   tous les autres) pour la Random Forest.
+   Interpretation : les courbes montent quasiment a l'angle superieur gauche,
+   avec des AUC proches de 1. Le modele separe excellemment les 4 postes, a tous
+   les seuils de decision — pas seulement au seuil par defaut.
+
+---------------------------------------------------------------------------
+PARTIE 2 — INTERPRETABILITE
+---------------------------------------------------------------------------
+
+7. importance_comparaison.png
+   Ce que montre la figure : importance native (Gini) a gauche, importance par
+   permutation a droite, pour la Random Forest.
+   Interpretation : les deux methodes classent les variables dans le MEME ordre —
+   defensive_contribution, offensive_contribution, creativity_score, puis
+   total_goals_tournament, pass_accuracy et height_cm.
+   Cet accord est rassurant : quand une variable sans signification remonte en
+   tete de l'importance native (biais de cardinalite), la permutation la fait
+   chuter. Ici non seulement les deux mesures concordent, mais les variables
+   retenues ont un SENS FOOTBALLISTIQUE evident : un defenseur se definit par sa
+   contribution defensive, un attaquant par ses buts, un milieu par sa creativite
+   et sa precision de passe. height_cm capte les gardiens et defenseurs centraux,
+   plus grands en moyenne. Le modele a donc appris quelque chose de reel.
+
+8. shap_summary_gardien.png
+   Ce que montre la figure : la contribution de chaque variable a la prediction
+   de la classe "Goalkeeper". Chaque point = un joueur ; rouge = valeur haute de
+   la variable, bleu = valeur basse ; a droite = pousse vers "Gardien".
+   Interpretation : des valeurs BASSES de contribution offensive et defensive
+   (points bleus a droite) poussent vers le poste de gardien — logique, un gardien
+   ne participe ni au pressing ni a l'attaque. C'est le modele qui redecouvre,
+   seul, ce qu'un amateur de football sait intuitivement.
+
+9. shap_waterfall_gardien.png
+   Ce que montre la figure : la decomposition d'une prediction individuelle pour
+   un gardien precis.
+   Interpretation : on part de la probabilite moyenne d'etre gardien (~11,5 %,
+   leur part dans les donnees) et on suit variable par variable la construction
+   de la prediction. Rouge = pousse vers "Gardien", bleu = eloigne. Pour ce
+   joueur, l'absence de contribution offensive et defensive suffit a faire
+   basculer la prediction.
+
+---------------------------------------------------------------------------
+PARTIE 3 — APPRENTISSAGE NON SUPERVISE
+---------------------------------------------------------------------------
+
+Rappel methodologique : la cible n'est JAMAIS utilisee pour construire les
+projections ni les clusters. Elle ne sert qu'a interpreter a posteriori.
+PRECAUTION : la colonne position est retiree des donnees avant standardisation.
+L'oublier rendrait l'analyse circulaire — on "decouvrirait" une structure liee au
+poste simplement parce qu'on l'aurait mise dans les variables d'entree.
+
+10. comparaison_reduction_dimension.png
+    Ce que montre la figure : les trois projections (PCA, ICA, t-SNE) cote a
+    cote, colorees par poste reel.
+    Interpretation : aucune ne fait apparaitre de groupes correspondant aux
+    postes. Silhouette selon les postes reels :
+      - PCA (30,3 % de variance) : -0,008
+      - ICA                      : +0,039
+      - t-SNE (5 000 points)     : -0,017
+    Ces scores sont nuls, voire NEGATIFS : dans l'espace reduit, les postes ne se
+    separent pas du tout — alors qu'on vient de les predire a 95,8 % en supervise.
+
+11. kmeans_vs_postes.png
+    Ce que montre la figure : a gauche les 4 clusters trouves par KMeans, a
+    droite les postes reels, sur les memes axes PCA.
+    Interpretation : les decoupes ne coincident pas. En attribuant a chaque
+    cluster le poste majoritaire qu'il contient, la PURETE n'atteint que 42,5 % —
+    a peine mieux qu'un tirage pondere (~30 %). Le silhouette de KMeans est de
+    0,147 (faible). DBSCAN aboutit au meme verdict : il isole 31 515 et 23 042
+    points (+ 43 de bruit), une decoupe qui ne recoupe pas davantage les 4 postes.
+
+===========================================================================
+CONCLUSION — LA LECON PRINCIPALE
+===========================================================================
+
+Le contraste entre les deux parties EST le resultat du projet :
+
+  Prediction supervisee du poste       -> F1 macro 0,958
+  Purete des clusters non supervises   -> 42,5 %
+
+Comment un signal aussi fort peut-il rester invisible en non supervise ?
+Parce que les deux familles de methodes ne cherchent pas la meme chose :
+
+  - LE SUPERVISE SAIT QUOI CHERCHER. On lui fournit la reponse ; il peut donc
+    isoler les quelques variables qui discriminent (defensive_contribution,
+    offensive_contribution...) et les combiner finement, meme si elles ne
+    representent qu'une faible part de la variabilite totale.
+
+  - LE NON SUPERVISE SUIT LA VARIANCE DOMINANTE. PCA et KMeans se laissent guider
+    par ce qui varie le plus parmi les 69 variables — et ici, c'est le NIVEAU DE
+    PERFORMANCE du joueur sur le match (temps de jeu, volume d'actions), pas son
+    poste. Le signal "poste" existe, mais il est NOYE dans une variance plus
+    grande.
+
+CE QUE CA ENSEIGNE : l'absence de structure visible en clustering ne signifie PAS
+l'absence de signal exploitable. C'est l'inverse de l'intuition courante, et
+c'est demontre ici par deux mesures independantes sur un meme jeu de donnees.
+
+BILAN METHODOLOGIQUE
+  - detection, quantification et exclusion d'une fuite de donnees (jersey_number) ;
+  - separation train/test par joueur, indispensable quand la cible est constante
+    par individu ;
+  - choix du F1 macro face a un desequilibre 3:1 ;
+  - accord entre importance native et par permutation, validant les variables ;
+  - SHAP applique a une classe (Gardien), globalement puis sur un joueur ;
+  - comparaison de TROIS reductions de dimension et de DEUX algorithmes de
+    clustering ;
+  - interpretation des confusions par le sens footballistique (frontiere
+    milieu/attaquant, gardiens peu sollicites).
