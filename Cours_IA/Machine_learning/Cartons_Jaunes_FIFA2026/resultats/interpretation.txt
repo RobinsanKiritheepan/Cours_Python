@@ -1,0 +1,39 @@
+
+RESULTATS — Prediction des cartons jaunes (FIFA World Cup 2026)
+
+1. comparaison_matrices_confusion.png
+Arbre de decision, Random Forest et Gradient Boosting compares sur le meme test.
+Random Forest et Gradient Boosting detectent bien plus de cartons (rappel ~40%)
+que l'arbre seul (12.5%), au prix d'une accuracy plus faible.
+
+2. courbe_roc.png
+AUC proches de 0.5 pour les 3 modeles -> capacite de discrimination faible,
+meme les meilleurs modeles distinguent a peine mieux que le hasard.
+
+3. shap_summary_plot.png
+defensive_contribution et defensive_actions ont l'effet le plus coherent :
+plus d'engagement defensif = plus de risque de carton. jersey_number ressort
+en tete mais est un artefact (biais de cardinalite), pas un vrai lien causal.
+
+4. shap_waterfall_joueur0.png
+Exemple individuel : risque legerement sous la moyenne (0.443 vs 0.5),
+explique surtout par une forte creativite de jeu (creativity_score).
+
+5. pca_projection.png / 6. pca_par_poste.png
+La reduction a 2 dimensions ne conserve que 30.8% de l'information.
+Une structure est visible, partiellement liee au poste des joueurs (gardiens
+nettement separes).
+
+7. kmeans_clusters.png
+Silhouette = 0.135 (faible). Ne retrouve pas parfaitement les postes reels.
+
+8. dbscan_clusters.png
+2 clusters nets trouves. Le cluster isole est enrichi en gardiens (18.2% vs 6.7%)
+mais le taux de cartons est quasi identique entre les deux clusters (9.9% vs 9.6%).
+
+CONCLUSION GENERALE
+Sur l'ensemble du projet (correlation, modeles supervises, SHAP, clustering),
+aucune methode ne trouve de lien fort entre les variables disponibles et
+yellow_cards. C'est une conclusion coherente et repetee a travers toutes les
+analyses : le comportement disciplinaire depend probablement de facteurs non
+presents dans ce dataset (decisions arbitrales, contexte instantane du match).
