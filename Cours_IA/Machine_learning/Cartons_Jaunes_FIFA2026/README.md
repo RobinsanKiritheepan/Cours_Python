@@ -16,8 +16,8 @@ reçoit un **carton jaune** lors d'un match (`yellow_cards` : 0 = non, 1 = oui).
 | Fichier | Description |
 |---|---|
 | [`projet_ml_fifa.ipynb`](projet_ml_fifa.ipynb) | Le notebook complet, **annoté** (cellules markdown : théorie + lecture des résultats) |
-| [`Rapport_ML_FIFA.pdf`](Rapport_ML_FIFA.pdf) | Rapport de synthèse (7 pages, figures commentées) |
-| [`Presentation_ML_FIFA.pptx`](Presentation_ML_FIFA.pptx) | Support de présentation (11 slides) |
+| [`Rapport_ML_FIFA.pdf`](Rapport_ML_FIFA.pdf) | Rapport de synthèse (13 pages, 13 figures commentées) |
+| [`Presentation_ML_FIFA.pptx`](Presentation_ML_FIFA.pptx) | Support de présentation (18 slides) |
 | [`resultats/`](resultats/) | Les figures générées + `interpretation.txt` |
 
 ---
@@ -41,7 +41,8 @@ reçoit un **carton jaune** lors d'un match (`yellow_cards` : 0 = non, 1 = oui).
 - **SHAP** : summary plot (global) + waterfall plot (un joueur).
 
 **Partie 3 — Apprentissage non supervisé**
-- **PCA** (réduction à 2 dimensions) · **KMeans** · **DBSCAN**.
+- Réduction de dimension : **PCA** · **ICA** · **t-SNE** (comparées quantitativement).
+- Clustering : **KMeans** · **DBSCAN**.
 - Les labels ne servent qu'à l'interprétation *a posteriori*.
 
 ---
