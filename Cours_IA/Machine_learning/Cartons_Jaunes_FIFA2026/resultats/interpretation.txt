@@ -1,39 +1,209 @@
-
+===========================================================================
 RESULTATS — Prediction des cartons jaunes (FIFA World Cup 2026)
+Cible : yellow_cards (0 = pas de carton, 1 = carton)
+54 600 lignes · 75 colonnes · 1 248 joueurs · 0 valeur manquante
+===========================================================================
 
-1. comparaison_matrices_confusion.png
-Arbre de decision, Random Forest et Gradient Boosting compares sur le meme test.
-Random Forest et Gradient Boosting detectent bien plus de cartons (rappel ~40%)
-que l'arbre seul (12.5%), au prix d'une accuracy plus faible.
+---------------------------------------------------------------------------
+PARTIE 0 — EXPLORATION
+---------------------------------------------------------------------------
 
-2. courbe_roc.png
-AUC proches de 0.5 pour les 3 modeles -> capacite de discrimination faible,
-meme les meilleurs modeles distinguent a peine mieux que le hasard.
+1. repartition_classes.png
+   Ce que montre la figure : la repartition de la variable cible — 90,2 % de 0
+   contre 9,8 % de 1.
+   Interpretation : ce desequilibre rend l'accuracy trompeuse. Un modele predisant
+   toujours « pas de carton » obtiendrait deja 90,2 % sans rien apprendre. C'est
+   ce qui justifie le choix du F1-score comme metrique de reference.
 
-3. shap_summary_plot.png
-defensive_contribution et defensive_actions ont l'effet le plus coherent :
-plus d'engagement defensif = plus de risque de carton. jersey_number ressort
-en tete mais est un artefact (biais de cardinalite), pas un vrai lien causal.
+2. correlations_cible.png
+   Ce que montre la figure : les 8 correlations les plus positives et les 8 plus
+   negatives entre les variables numeriques et yellow_cards.
+   Interpretation : toutes restent sous |0,04| — aucun lien lineaire exploitable.
+   On note toutefois une coherence footballistique : les variables defensives
+   (clearances, defensive_actions, tackles, interceptions) sont les seules du cote
+   positif. Cela ne condamne pas le projet : la correlation ne voit que les liens
+   simples, d'ou le recours a des modeles captant des combinaisons de variables.
 
-4. shap_waterfall_joueur0.png
-Exemple individuel : risque legerement sous la moyenne (0.443 vs 0.5),
-explique surtout par une forte creativite de jeu (creativity_score).
+---------------------------------------------------------------------------
+PARTIE 1 — APPRENTISSAGE SUPERVISE
+---------------------------------------------------------------------------
 
-5. pca_projection.png / 6. pca_par_poste.png
-La reduction a 2 dimensions ne conserve que 30.8% de l'information.
-Une structure est visible, partiellement liee au poste des joueurs (gardiens
-nettement separes).
+3. comparaison_metriques.png
+   Ce que montre la figure : accuracy, precision, rappel, F1 et ROC-AUC des trois
+   modeles sur le meme jeu de test (10 874 lignes, joueurs jamais vus).
+   Interpretation : l'arbre domine en accuracy (0,816) tout en etant le plus
+   mauvais en rappel (0,125) — illustration parfaite du piege de l'accuracy.
+   Meilleurs hyperparametres (GridSearchCV, scoring = F1) :
+     - Arbre           : max_depth = None, min_samples_leaf = 1        (F1 CV 0,113)
+     - Random Forest   : n_estimators = 100, max_depth = 5,
+                         min_samples_leaf = 1, class_weight = balanced (F1 CV 0,185)
+     - Gradient Boost. : n_estimators = 100, learning_rate = 0,05,
+                         max_depth = 3, sample_weight equilibre        (F1 CV 0,479)
+   Le F1 CV du boosting (0,479) depasse largement son F1 de test (0,175) :
+   GridSearchCV decoupe ses plis ligne par ligne, donc un meme joueur peut se
+   retrouver des deux cotes pendant la validation interne, ce qui gonfle le score.
+   Le test final, separe par joueur, donne la mesure honnete.
 
-7. kmeans_clusters.png
-Silhouette = 0.135 (faible). Ne retrouve pas parfaitement les postes reels.
+4. comparaison_matrices_confusion.png
+   Ce que montre la figure : les matrices de confusion des trois modeles
+   (diagonale = bonnes predictions, hors-diagonale = erreurs).
+   Interpretation : l'arbre ne detecte que 125 cartons sur 1 000. Le reequilibrage
+   des classes porte Random Forest et Gradient Boosting a ~410 cartons detectes,
+   au prix d'environ 3 100 faux positifs.
+     - Faux positif = signaler a tort un joueur qui ne prendra pas de carton.
+       C'est l'erreur jugee la plus grave ici : on ne veut pas penaliser
+       injustement un joueur.
+     - Faux negatif = ne pas anticiper un carton reel.
+   Random Forest produit 3 098 faux positifs contre 593 faux negatifs : elle se
+   trompe 5 fois plus souvent dans le sens le plus couteux. Sur ses 3 505 alertes
+   « carton », seules 407 sont justes (precision 11,6 %) — environ 9 alertes sur
+   10 sont infondees. Optimiser le F1 ne correspond donc pas a la priorite metier ;
+   viser la precision, ou relever le seuil de decision, serait preferable.
 
-8. dbscan_clusters.png
-2 clusters nets trouves. Le cluster isole est enrichi en gardiens (18.2% vs 6.7%)
-mais le taux de cartons est quasi identique entre les deux clusters (9.9% vs 9.6%).
+5. courbe_roc.png
+   Ce que montre la figure : les courbes ROC des trois modeles, avec la diagonale
+   du hasard en reference.
+   Interpretation : AUC de 0,506 / 0,546 / 0,543 — a peine mieux que le hasard.
+   La ROC teste TOUS les seuils de decision, pas seulement 50 %. Elle revele que
+   le gain de F1 obtenu par reequilibrage venait surtout d'un deplacement du seuil
+   (modele plus alarmiste), et non d'une vraie capacite a separer les classes.
 
+---------------------------------------------------------------------------
+PARTIE 2 — INTERPRETABILITE
+---------------------------------------------------------------------------
+
+6. importance_comparaison.png
+   Ce que montre la figure : importance native (Gini) a gauche, importance par
+   permutation a droite, pour la Random Forest. Attention aux echelles des deux
+   axes : 0–0,16 a gauche, 0–0,008 a droite.
+   Interpretation : l'importance native place jersey_number en tete, ce qui n'a
+   aucun sens footballistique. C'est le biais de cardinalite — les variables a
+   nombreuses valeurs distinctes offrent plus d'occasions de decoupage et sont
+   donc sur-notees. L'importance par permutation tranche : 0,128 tombe a 0,008,
+   un effondrement d'un facteur ~16. Aucune variable n'a d'effet reellement
+   marquant.
+
+7. shap_summary_plot.png
+   Ce que montre la figure : la contribution de chaque variable a chaque
+   prediction. Chaque point = un joueur ; rouge = valeur haute de la variable,
+   bleu = valeur basse ; a droite = pousse vers « carton ».
+   Interpretation : defensive_contribution donne la relation la plus coherente
+   (bleu a gauche, rouge a droite) — plus d'engagement defensif, plus de risque.
+   Mais l'echelle (-0,04 a +0,03) confirme un signal tres faible.
+
+8. shap_waterfall_joueur0.png
+   Ce que montre la figure : la decomposition d'une prediction individuelle, de
+   la prediction moyenne (0,5) vers celle du joueur (0,443).
+   Interpretation : bleu = pousse vers « pas de carton », rouge = vers « carton ».
+   Ici, un creativity_score tres eleve (99) reduit le risque ;
+   total_minutes_tournament pousse en sens inverse, mais de facon negligeable.
+
+---------------------------------------------------------------------------
+PARTIE 3 — APPRENTISSAGE NON SUPERVISE
+---------------------------------------------------------------------------
+
+Rappel methodologique : la cible n'est JAMAIS utilisee pour construire les
+projections ni les clusters. Les labels (poste, cartons) ne servent qu'a
+interpreter les resultats a posteriori.
+
+9. comparaison_reduction_dimension.png
+   Ce que montre la figure : les trois projections (PCA, ICA, t-SNE) cote a cote,
+   colorees par poste.
+   Interpretation : PCA (variance maximale) isole les gardiens mais melange les
+   autres postes ; ICA (composantes independantes) fait apparaitre des bandes
+   horizontales nettes par role ; t-SNE (non lineaire, voisinage local) eclate les
+   donnees en de nombreux micro-groupes, visuellement spectaculaires mais qui ne
+   correspondent pas aux postes.
+   Note : t-SNE ayant une complexite quadratique, il est applique a un echantillon
+   de 5 000 points precede d'une PCA a 30 composantes (accelere et debruite).
+
+10. comparaison_silhouette_reduction.png
+    Ce que montre la figure : comparaison chiffree des trois techniques par score
+    de silhouette (1 = groupes parfaitement separes, 0 = confondus).
+      - Separation des postes reels : PCA 0,078 · ICA 0,138 · t-SNE 0,108
+      - Cohesion d'un KMeans(4)     : PCA 0,468 · ICA 0,451 · t-SNE 0,396
+      - Temps de calcul  : PCA < 1 s · ICA < 1 s (54 600 lignes)
+                           t-SNE 19 s (5 000 lignes seulement)
+    Interpretation : ICA separe le mieux les postes — chercher des composantes
+    independantes est ici plus pertinent que chercher la variance maximale, qui
+    ne coincide pas avec ce qui distingue les roles. t-SNE obtient un score
+    intermediaire : ses micro-groupes traduisent des similarites locales tres
+    fines plutot que la structure des postes. PCA garde la meilleure cohesion de
+    clustering et reste de loin la plus rapide sur le jeu complet : c'est elle
+    qu'on retient pour la suite.
+
+11. pca_variance_expliquee.png
+    Ce que montre la figure : la variance expliquee par composante (barres) et la
+    variance cumulee (ligne), pour les 15 premieres composantes.
+    Interpretation : les 2 premieres composantes ne captent que 30,8 % de
+    l'information (21,9 % + 8,9 %). La projection 2D est utile pour visualiser
+    mais perd pres de 70 % du signal — a garder en tete en lisant les nuages.
+
+12. pca_projection.png
+    Ce que montre la figure : la projection brute des 54 600 lignes sur les deux
+    premieres composantes principales.
+    Interpretation : malgre la perte d'information, une structure nette apparait —
+    une branche isolee a gauche, une masse centrale, et un petit amas en bas.
+
+13. pca_par_poste.png
+    Ce que montre la figure : la meme projection, coloree par poste.
+    Interpretation : l'amas isole en bas correspond aux gardiens, dont le profil
+    statistique est radicalement different (peu de tacles, beaucoup d'arrets).
+    Defenseurs, milieux et attaquants s'organisent en bandes superposees. La
+    structure des donnees reflete donc le ROLE du joueur.
+
+14. kmeans_clusters.png
+    Ce que montre la figure : les 4 clusters trouves par KMeans (k = 4, comme les
+    4 postes), projetes sur les axes PCA.
+    Interpretation : silhouette de 0,135 seulement — les groupes se chevauchent.
+    KMeans ne retrouve pas les postes reels et fusionne l'amas des gardiens avec
+    un autre groupe, car il cherche des groupes convexes de taille comparable.
+
+15. dbscan_clusters.png
+    Ce que montre la figure : les clusters trouves par DBSCAN (eps = 0,8,
+    min_samples = 20) applique sur la projection PCA.
+    Interpretation : 2 clusters nets (31 531 et 23 042 lignes) et seulement 27
+    points de bruit. Applique aux 72 dimensions brutes, DBSCAN classait tout en
+    bruit — c'est la malediction de la dimension (les distances explosent en
+    haute dimension).
+    Croisement post-hoc avec les labels :
+      - part de gardiens       : cluster 0 = 6,7 %  |  cluster 1 = 18,2 %
+      - taux de cartons jaunes : cluster 0 = 9,9 %  |  cluster 1 = 9,6 %
+    Le cluster isole est donc pres de 3x plus riche en gardiens, mais le taux de
+    cartons y est quasi identique : la structure reflete le poste, pas les cartons.
+
+===========================================================================
 CONCLUSION GENERALE
-Sur l'ensemble du projet (correlation, modeles supervises, SHAP, clustering),
-aucune methode ne trouve de lien fort entre les variables disponibles et
-yellow_cards. C'est une conclusion coherente et repetee a travers toutes les
-analyses : le comportement disciplinaire depend probablement de facteurs non
-presents dans ce dataset (decisions arbitrales, contexte instantane du match).
+===========================================================================
+
+Quatre approches independantes convergent vers le meme constat :
+
+  1. Correlation             — aucune variable au-dessus de |0,04|
+  2. Modeles supervises      — AUC de 0,506 a 0,546, a peine mieux que le hasard
+  3. Permutation & SHAP      — effets individuels minuscules
+  4. Reduction & clustering  — la structure reflete le poste, pas les cartons
+
+Les cartons jaunes ne sont pas predictibles a partir de ces variables. La
+convergence de quatre methodes de natures differentes rend ce constat solide :
+ce n'est pas l'echec d'un modele mal regle, mais une propriete du jeu de donnees.
+
+L'explication la plus plausible : le comportement disciplinaire depend de facteurs
+ABSENTS du dataset — la decision de l'arbitre et sa severite propre, le contexte
+instantane du match, la tension d'une action isolee. Aucune statistique agregee de
+performance ne capture ces elements.
+
+Ce que la demarche demontre malgre tout :
+  - le piege de l'accuracy sur donnees desequilibrees ;
+  - le reequilibrage des classes (class_weight / sample_weight) et son effet
+    mesurable (F1 de 0 a 0,18) ;
+  - l'arbitrage precision / rappel et sa divergence avec la priorite metier ;
+  - le biais de cardinalite des importances natives, corrige par permutation ;
+  - la prevention d'une fuite de donnees par un decoupage train/test par joueur ;
+  - la difference entre KMeans (groupes convexes) et DBSCAN (densite), et la
+    malediction de la dimension.
+
+Reproductibilite : l'integralite du pipeline a ete re-executee independamment a
+partir du CSV brut — repartition des classes, decoupage train/test et absence de
+joueur commun, matrices de confusion, les 5 metriques des 3 modeles, importances,
+variance PCA, silhouette, tailles des clusters DBSCAN et taux de cartons par
+cluster. Tous les resultats sont reproduits a l'identique.
